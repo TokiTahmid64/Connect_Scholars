@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Papers</h2>
+</div>
+<br>
+<div class="container " style="padding-right: 1300px ; width:1000px; ">
+      
+  <a href="{% url 'general_user:general_user-search_sort' %}" class="btn btn-success" >Sort By Citation</a> 
+</div>
+<br>
+<div class="container">
+   
+      {% load static %}
+      {% for paper in papers %}
+      
+      {% with idx=forloop.counter %} 
+      
+
+
+      <div class="card  bg-light mb-3"  style="max-width: 70rem;" >
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card text-black bg-light mb-3">
+            <div class="card-body ">
+              <h5 class="card-header text-white bg-dark mb-3">{{paper.TITLE}}</h5>
+              <h6 class="card-title"> <b>Published Year:</b> {{paper.PUBLISHED_YEAR}}</h6>
+              <h6 class="card-title">Total Citation: {{paper.CITATION}}</h6>
+              <h6 class="card-title">Journal: {{paper.NAME}}</h6>
+              <h6 class="card-title">Publisher: {{paper.PUBLISHER}}</h6>
+              {% for author in authors %}
+                {% with idy=forloop.counter %}
+                  {% if idx == idy %}
+                  <br>
+                  <h5 class="card-title">Authors: </h6>
+                    {% for ind in author %}
+                    <a href="{% url 'general_user:author' author_id=ind.AUTHOR_ID%}"><h6 class="card-title">{{ind.DISPLAYNAME}}</h6></a>  
+                    
+                    {%endfor%}
+                  {%endif%}
+                {%endwith%}
+              {% endfor %}
+            
+         
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Abstract</h5>
+              <p class="card-text">{{paper.ABSTRACT}}</p>
+              {% if paper.URL_ID is not null %}
+                <a href="{% url 'general_user:pdf' pdf_id=paper.URL_ID%}" class="btn btn-primary">Pdf</a>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      
+      
+      {% endwith %} 
+      {% endfor %}
+   
+      
+</div>
+{% endblock content %}

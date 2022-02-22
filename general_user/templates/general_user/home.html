@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="py-5 text-center">
+      {% load static %} <img class="d-block mx-auto mb-4" src="{% static "images/logo2.jpg" %}" alt="" width="600" height="120">
+      <br>
+      <h2>Search for Papers</h2>
+    </div>
+
+    
+    <div class="container">
+        <form class="px-md-2" method="POST" action="{% url 'general_user:general_user-search' %}">
+            {% csrf_token %}
+
+          <div class="form-outline mb-4">
+            <input type="text" id="form3Example1q" class="form-control border" name="search"/>
+            <label class="form-label border" for="form3Example1q">
+          </div>
+
+         
+          
+
+
+          <br>
+       
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-success btn-lg mb-1">Find</button>
+          </div>
+
+        </form>
+    </div>
+
+
+    <div class="container" >
+      <h2 class="text-center my-3 py-3">Top Cited Papers</h2>
+
+      <div class="row">
+
+
+
+
+        {% for paper in  papers%}
+        <div class="col-md-4">
+          <div class="col-sm-10">
+            <div class="card text-black bg-white mb-3">
+              <div class="card-body ">
+                <h5 class="card-header text-white bg-dark mb-3">{{paper.TITLE}}</h5>
+                <h6 class="card-title"><b>Published Year:</b> {{paper.PUBLISHED_YEAR}}</h6>
+                <h6 class="card-title"><b>Total Citation:</b> {{paper.CITATION}}</h6>
+                <h6 class="card-title"><b>Journal:</b> {{paper.NAME}}</h6>
+                <h6 class="card-title"><b>Publisher:</b> {{paper.PUBLISHER}}</h6>
+                {% for author in authors %}
+                  {% with idy=forloop.counter %}
+                    {% if idx == idy %}
+                    <h5 class="card-title"><u>Authors:</u> </h6>
+                      {% for ind in author %}
+                        <h6 class="card-title">{{ind.DISPLAYNAME}}</h6>
+                      {%endfor%}
+                    {%endif%}
+                  {%endwith%}
+                {% endfor %}
+              
+           
+              </div>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+
+
+
+
+
+      </div>
+    </div>
+
+
+
+    
+    
+{% endblock content %}

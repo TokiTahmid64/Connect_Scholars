@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+    <div class="row">
+
+    
+     <div class="col-sm-3 container">
+        <div class="card" style="width: 30rem;">
+            <img src="https://source.unsplash.com/600x300/?suit" class="card-img-top" alt="..."   width="30" height="100">
+            <div class="card-body">
+                
+              {% for name in name %}
+                    <h3 class="card-title">{{name.DISPLAYNAME}}</h3>
+              {% endfor %}
+
+              {% for mail in email %}
+                    <p><b>Verified Email at:</b> {{mail.EMAIL}}</h3>
+              {% endfor %}
+
+              
+              {% for cite in citations %}
+                    <p><b>Total Citation:</b> {{cite.CITE_COUNT}}</h3>
+              {% endfor %}
+            
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for versity in affiliation %}
+                <li class="list-group-item">{{versity.NAME}}</li>
+                {% endfor %}
+              
+            </ul>
+            <div class="card-body">
+              {% for domain in expertise %}
+                <a href="#" class="card-link">{{domain.NAME}}</a>
+              {% endfor %}
+            </div>
+          </div>
+    </div>
+
+    <div class="col-sm-5 container">
+
+      <div class="container">
+        <h2>Co Authors</h2>
+      </div>
+      <style>
+          .my-custom-scrollbar {
+            position: relative;
+            height: 200px;
+            overflow: auto;
+            }
+          .table-wrapper-scroll-y {
+          display: block;
+          }
+      </style>
+      <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+        <table class="table table-bordered table-striped mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Serial</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for author in co_authors %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{author.DISPLAYNAME}}</td>
+              <td>{{author.EMAIL}}</td>
+              
+              
+            </tr>
+            {%endfor%}
+            
+          </tbody>
+        </table>
+      
+      </div>
+    </div>
+
+    </div>
+
+
+    
+    
+    <br>
+    <div class="container">
+        <h2 style="margin:0 auto; text-align:left; width:500px;">Accepted Papers</h2>
+    </div>
+    <br>
+    
+
+
+    <div class="container">
+   
+      {% load static %}
+      {% for paper in papers %}
+      {% with idx=forloop.counter %} 
+      
+
+
+      <div class="card  bg-light mb-3"  style="max-width: 70rem;" >
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card text-black bg-light mb-3">
+            <div class="card-body ">
+              <h5 class="card-header text-white bg-dark mb-3">{{paper.TITLE}}</h5>
+              <h6 class="card-title">Published Year: {{paper.PUBLISHED_YEAR}}</h6>
+              <h6 class="card-title">Total Citation: {{paper.CITATION}}</h6>
+              <h6 class="card-title">Journal: {{paper.NAME}}</h6>
+              <h6 class="card-title">Publisher: {{paper.PUBLISHER}}</h6>
+              {% for author in authors %}
+                {% with idy=forloop.counter %}
+                  {% if idx == idy %}
+                  <h5 class="card-title"><u>Authors:</u> </h6>
+                    {% for ind in author %}
+                      <h6 class="card-title">{{ind.DISPLAYNAME}}</h6>
+                    {%endfor%}
+                  {%endif%}
+                {%endwith%}
+              {% endfor %}
+            
+         
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Abstract</h5>
+              <p class="card-text">{{paper.ABSTRACT}}</p>
+              {% if paper.URL_ID is not null %}
+                <a href="{% url 'general_user:pdf_from_author' pdf_id=paper.URL_ID%}" class="btn btn-primary">Pdf</a>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      
+      
+      {% endwith %} 
+      {% endfor %}
+   
+      
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="container">
+        <table class="table table-success table-striped table-hover">
+            <thead>
+              <tr>
+                
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+            {% for paper in papers %}
+            
+
+              <tr>
+                <td>{{ paper.ID }}</td>
+                <td>{{ paper.TITLE }}</td>
+                
+              </tr>
+              
+            {% endfor %}
+            </tbody>
+          </table>
+       
+          
+    </div> -->
+
+
+    <div class="container">
+      <h2>Non Verified Papers</h2>
+
+    </div>
+    <div class="container">
+      <table class="table table-success table-striped table-hover">
+          <thead>
+            <tr>
+              
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+          {% for paper in papers_temp %}
+          
+
+            <tr>
+              <td>{{ paper.ID }}</td>
+              <td>{{ paper.TITLE }}</td>
+              
+            </tr>
+            
+          {% endfor %}
+          </tbody>
+        </table>
+     
+        
+  </div>
+ 
+
+{% endblock content %}

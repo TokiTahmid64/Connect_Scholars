@@ -1,0 +1,38 @@
+{% extends "admin_panel/base.html" %}
+{% block content %}
+
+
+
+   
+
+
+
+    <div class="container">
+       <br>       
+      <a href="{% url 'admin_panel:add_domain' %}" class="btn btn-primary">Add New Domain</a> 
+    </div>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+              <tr>
+                
+                <th scope="col">Domain ID</th>
+                <th scope="col">Domain Name</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for domain in domains %}
+                <tr>
+                    <th scope="row">{{domain.ID}}</th>
+                    <td>{{domain.NAME}}</td>
+                    
+                </tr>
+              {%endfor%}
+              
+            </tbody>
+          </table>
+    </div>
+
+{% endblock content %}

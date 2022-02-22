@@ -1,0 +1,44 @@
+{% extends "admin_panel/base.html" %}
+{% block content %}
+
+    <br>
+    <br>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                
+                <th scope="col">Paper ID</th>
+                <th scope="col">Paper Title</th>
+                <th scope="col">Published Year</th>
+                <th scope="col">Journal ID</th>
+                <th scope="col">Abstract</th>
+                <th scope="col">Domain</th>
+                
+                <th scope="col">Approval</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for paper in papers %}
+                <tr>
+                    <th scope="row">{{paper.ID}}</th>
+                    <td>{{paper.TITLE}}</td>
+                    <td>{{paper.PUBLISED_YEAR}}</td>
+                    <td>{{paper.JOURNAL_ID}}</td>
+                    <td>{{paper.ABSTRACT}}</td>
+                    <td>{{paper.DOMAIN}}</td>
+                    <td><a href="{% url 'admin_panel:approve' id=paper.ID%}" class="btn btn-primary">Approve</a></td>
+                    <td><a href="{% url 'admin_panel:reject' id=paper.ID%}" class="btn btn-primary">Reject</a></td>
+                    
+                
+                    
+                </tr>
+              {%endfor%}
+              
+            </tbody>
+          </table>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <div class="container">
+  <section class="h-100 h-custom" >
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-6">
+          <div class="card rounded-3">
+            {% load static %} <img class="d-block mx-auto mb-4" src="{% static "images/logo2.jpg" %}" alt="" width="600" height="120">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Add Paper</h3>
+  
+              <form class="px-md-2" method="POST" action="{% url 'logged_user:add_paper' %}">
+                  {% csrf_token %}
+  
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example1q" class="form-control" name="Title"/>
+                  <label class="form-label" for="form3Example1q">Title</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="form3Example1q" class="form-control" name="Journal"/>
+                    <label class="form-label" for="form3Example1q">Journal</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="form3Example1q" class="form-control" name="Date"/>
+                    <label class="form-label" for="form3Example1q">Date</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="form3Example1q" class="form-control" name="Domain"/>
+                    <label class="form-label" for="form3Example1q">Domain</label>
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="text" id="form3Example1q" class="form-control" name="Abstract"/>
+                    <label class="form-label" for="form3Example1q">Abstract</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example1q" class="form-control" name="Authors"/>
+                  <label class="form-label" for="form3Example1q">Authors</label>
+                  <!-- <textarea rows="4" cols="50" name="Authors" form="usrform">
+                   Type Author Names with ';'</textarea> -->
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example1q" class="form-control" name="References"/>
+                  <label class="form-label" for="form3Example1q">Cited Papers</label>
+                  <!-- <textarea rows="4" cols="50" name="Authors" form="usrform">
+                   Type Author Names with ';'</textarea> -->
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="file" id="form3Example1q" class="form-control" name="url"/>
+                  <label class="form-label" for="form3Example1q">Add PDF</label>
+                  <!-- <textarea rows="4" cols="50" name="Authors" form="usrform">
+                   Type Author Names with ';'</textarea> -->
+                </div>
+               
+
+
+
+                
+
+                
+  
+                <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+{% endblock content %}

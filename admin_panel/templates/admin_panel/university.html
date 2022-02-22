@@ -1,0 +1,39 @@
+{% extends "admin_panel/base.html" %}
+{% block content %}
+
+
+
+    <div class="container">
+        <br>       
+        <a href="{% url 'admin_panel:add_university' %}" class="btn btn-primary">Add New University</a> 
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+              <tr>
+                
+                <th scope="col"> ID</th>
+                <th scope="col">University Name</th>
+                <th scope="col">Webpage</th>
+                <th scope="col">Latitude</th>
+                <th scope="col">Longitude</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for uni in university%}
+                <tr>
+                    <th scope="row">{{uni.ID}}</th>
+                    <td>{{uni.NAME}}</td>
+                    <td>{{uni.WEBPAGE}}</td>
+                    <td>{{uni.LATITUDE}}</td>
+                    <td>{{uni.LONGITUDE}}</td>
+                    
+                </tr>
+              {%endfor%}
+              
+            </tbody>
+          </table>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends "admin_panel/base.html" %}
+{% block content %}
+
+
+
+    <div class="container">
+        <br>       
+        <a href="{% url 'admin_panel:add_journal' %}" class="btn btn-primary">Add New Journal</a> 
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+              <tr>
+                
+                <th scope="col">Journal ID</th>
+                <th scope="col">Journal Name</th>
+                <th scope="col">Publisher</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for journal in journals%}
+                <tr>
+                    <th scope="row">{{journal.JOURNAL_ID}}</th>
+                    <td>{{journal.NAME}}</td>
+                    <td>{{journal.PUBLISHER}}</td>
+                    
+                </tr>
+              {%endfor%}
+              
+            </tbody>
+          </table>
+    </div>
+
+{% endblock content %}
