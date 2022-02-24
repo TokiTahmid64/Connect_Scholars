@@ -12,15 +12,14 @@ def home_logout(request):
     if 'loggedIn' in request.session:
        del request.session['loggedIn']
        
-    if 'cited' in request.session:
-       del request.session['cited']
-    
-    if 'loggedIn_admin' in request.session:
-            del request.session['loggedIn_admin']
+
  
     papers=connections['scholars_db'].cursor().execute("select distinct T1.id as paper_id,T1.DOI,T1.TITLE,T1.published_year,T1.CITATION,NAME,abstract,publisher,url.id as url_id from paper T1 join  (select * from AUTHOROF) T2 on (T1.id=T2.paper_id) left outer join JOURNAL on (T1.journal_id = journal.journal_id) left outer join url on(T1.id=url.id) order by CITATION desc fetch first 3 rows only;")
        
-
+    papers_recommended=[]
+    if 'loggedIn' in request.session: 
+       papers_recommended=dictfetchall(connections['scholars_db'].cursor().execute("select * from (select * from PAPER T1 join(select domain,max(CITATION) as max_cite from paper where DOMAIN in (select NAME from domain where id in (select DOMAIN_ID from EXPERTISE where AUTHOR_ID = '"+ str(request.session['user_id'])   +"')) group by DOMAIN) T2 on (T1.DOMAIN=T2.DOMAIN and T1.CITATION=T2.max_cite)) T1 join (select * from JOURNAL) T2 on (T1.JOURNAL_ID=T2.JOURNAL_ID);"))
+      
     #ids=connections['scholars_db'].cursor().execute("select paper.id as paper_id from paper join authorof on (paper.id=authorof.author_id) left outer join JOURNAL on (paper.journal_id = journal.journal_id) left outer join url on(paper.id=url.id);")
     
     ids=connections['scholars_db'].cursor().execute("select T1.id as paper_id from paper T1 join (select * from authorof where AUTHOR_ID='" + str(request.session['user_id']) + "') T2 on (T1.id=T2.PAPER_ID);")
@@ -45,24 +44,36 @@ def home_logout(request):
    
     #cited=dictfetchall(connections['scholars_db'].cursor().execute("select NOTIFICATION from author where author_id='"+ str(request.session['user_id']) +"';")
     
-    context={'papers':dictfetchall(papers),'authors':author_list}
-    #context={'affiliation':dictfetchall(affiliation)}
+    
+
+
+    
+    context={'papers':dictfetchall(papers),'authors':author_list,'rec_papers':(papers_recommended)}
     
     
 
 
     
     return render(request,'general_user/home.html',context=context)
-
 def home(request):
-
-    print(os.getcwd())
 
     if 'cited' in request.session:
        del request.session['cited']
+    
+    if 'loggedIn_admin' in request.session:
+            del request.session['loggedIn_admin']
+
+   
  
     papers=connections['scholars_db'].cursor().execute("select distinct T1.id as paper_id,T1.DOI,T1.TITLE,T1.published_year,T1.CITATION,NAME,abstract,publisher,url.id as url_id from paper T1 join  (select * from AUTHOROF) T2 on (T1.id=T2.paper_id) left outer join JOURNAL on (T1.journal_id = journal.journal_id) left outer join url on(T1.id=url.id) order by CITATION desc fetch first 3 rows only;")
+
+    papers_recommended=[]
+    if 'loggedIn' in request.session: 
+       papers_recommended=dictfetchall(connections['scholars_db'].cursor().execute("select * from (select * from PAPER T1 join(select domain,max(CITATION) as max_cite from paper where DOMAIN in (select NAME from domain where id in (select DOMAIN_ID from EXPERTISE where AUTHOR_ID = '"+ str(request.session['user_id'])   +"')) group by DOMAIN) T2 on (T1.DOMAIN=T2.DOMAIN and T1.CITATION=T2.max_cite)) T1 join (select * from JOURNAL) T2 on (T1.JOURNAL_ID=T2.JOURNAL_ID);"))
        
+
+
+ 
 
     #ids=connections['scholars_db'].cursor().execute("select paper.id as paper_id from paper join authorof on (paper.id=authorof.author_id) left outer join JOURNAL on (paper.journal_id = journal.journal_id) left outer join url on(paper.id=url.id);")
     
@@ -85,11 +96,8 @@ def home(request):
     
 
 
-   
-    #cited=dictfetchall(connections['scholars_db'].cursor().execute("select NOTIFICATION from author where author_id='"+ str(request.session['user_id']) +"';")
     
-    context={'papers':dictfetchall(papers),'authors':author_list}
-    #context={'affiliation':dictfetchall(affiliation)}
+    context={'papers':dictfetchall(papers),'authors':author_list,'rec_papers':(papers_recommended)}
     
     
 
@@ -281,30 +289,29 @@ def pdf(request,pdf_id):
     import webbrowser
 
     webbrowser.open_new(s)
+
+
     search=request.session.get('searched')
+    
     c=connections['scholars_db'].cursor()
     c.callproc('get_domains',[str(search)])
-    papers=connections['scholars_db'].cursor().execute("select paper.id as paper_id,DOI,TITLE,published_year,NAME,abstract,publisher,url.id as url_id from paper join searched on (paper.domain=searched.string) left outer join JOURNAL on (paper.journal_id = journal.journal_id) left outer join url on(paper.id=url.id);")
-    
+    papers=connections['scholars_db'].cursor().execute("select paper.id as paper_id,DOI,TITLE,published_year,CITATION,NAME,abstract,publisher,url.id as url_id from paper join searched on (paper.domain=searched.string) left outer join JOURNAL on (paper.journal_id = journal.journal_id) left outer join url on(paper.id=url.id);")
     ids=connections['scholars_db'].cursor().execute("select paper.id as paper_id from paper join searched on (paper.domain=searched.string) left outer join JOURNAL on (paper.journal_id = journal.journal_id) left outer join url on(paper.id=url.id);")
     ids=dictfetchall(ids)
     author_list=[]
     for idx,itr in enumerate(ids):
         val=(itr['PAPER_ID'])
-        authors=connections['scholars_db'].cursor().execute("select displayname from author where author_id in(select author_id from authorof"+
+        authors=connections['scholars_db'].cursor().execute("select author_id,displayname from author where author_id in(select author_id from authorof"+
         " where paper_id='"+ str(val) +"' );")
         
         authors=dictfetchall(authors)
         author_list.append(authors)
-
-       
-            
+    
+    
     context={'papers':dictfetchall(papers),'authors':author_list}
+    #print(context)
     request.session['searched'] = search
-    #print(context['papers'][0])
     return render(request,'general_user/paper.html',context=context)
-
-
 
                     
 

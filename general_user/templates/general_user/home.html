@@ -40,7 +40,7 @@
 
 
         {% for paper in  papers%}
-        <div class="col-md-4">
+        <div class="col-md-4" style="background-color: beige;">
           <div class="col-sm-10">
             <div class="card text-black bg-white mb-3">
               <div class="card-body ">
@@ -73,6 +73,43 @@
 
       </div>
     </div>
+
+    {% if request.session.loggedIn %}
+    <div class="container">
+      <h2 class="text-center my-3 py-3">Recommended Articles</h2>
+
+      <div class="row">
+
+
+
+
+        {% for rec_papers in rec_papers%}
+        <div class="col-md-4" style="background-color: beige;">
+          <div class="col-sm-10">
+            <div class="card text-black bg-white mb-3">
+              <div class="card-body ">
+                <h5 class="card-header text-white bg-info mb-3">{{rec_papers.TITLE}}</h5>
+                <h6 class="card-title"><b>Published Year:</b> {{rec_papers.PUBLISHED_YEAR}}</h6>
+                <h6 class="card-title"><b>Total Citation:</b> {{rec_papers.CITATION}}</h6>
+                <h6 class="card-title"><b>Journal:</b> {{rec_papers.NAME}}</h6>
+                <h6 class="card-title"><b>Publisher:</b> {{rec_papers.PUBLISHER}}</h6>
+                
+              
+           
+              </div>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+
+
+
+
+
+      </div>
+
+    </div>
+    {%endif%}
 
 
 

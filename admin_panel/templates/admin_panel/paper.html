@@ -5,6 +5,8 @@
     <br>
 
     <div class="container">
+      <h1> Paper waiting for approval</h1>
+      <br>
         <table class="table table-hover">
             <thead>
               <tr>
@@ -40,5 +42,48 @@
             </tbody>
           </table>
     </div>
+
+    <br>
+    <br>
+    <br>
+    <div class="container">
+      <h1> Paper Approved</h1>
+      <br>
+        <table class="table table-hover table-success">
+            <thead>
+              <tr>
+                
+                <th scope="col">Paper ID</th>
+                <th scope="col">Paper Title</th>
+                <th scope="col">Published Year</th>
+                <th scope="col">Journal ID</th>
+                <th scope="col">Abstract</th>
+                <th scope="col">Domain</th>
+                
+                <th scope="col">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {% for paper in approved %}
+                <tr>
+                    <th scope="row">{{paper.ID}}</th>
+                    <td>{{paper.TITLE}}</td>
+                    <td>{{paper.PUBLISED_YEAR}}</td>
+                    <td>{{paper.JOURNAL_ID}}</td>
+                    <td>{{paper.ABSTRACT}}</td>
+                    <td>{{paper.DOMAIN}}</td>
+                    <td><a href="{% url 'admin_panel:delete' id=paper.ID%}" class="btn btn-danger">Remove</a></td>
+                    
+                
+                    
+                </tr>
+              {%endfor%}
+              
+            </tbody>
+          </table>
+    </div>
+    
+
 
 {% endblock content %}

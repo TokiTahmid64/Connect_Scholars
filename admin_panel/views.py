@@ -17,7 +17,9 @@ def login(request):
         if username_=='admin' and password_=='password':
             request.session['loggedIn_admin'] = True
             papers=dictfetchall(connections['scholars_db'].cursor().execute("select * from non_verified_paper;"))
-            context={'papers':papers}
+            
+            papers_approved=dictfetchall(connections['scholars_db'].cursor().execute("select * from paper;"))
+            context={'papers':papers,'approved':papers_approved}
             return render(request,'admin_panel/paper.html',context=context)
         else:
             return render(request,'admin_panel/admin_login.html')
@@ -32,9 +34,31 @@ def paper(request):
         papers=dictfetchall(connections['scholars_db'].cursor().execute("select * from non_verified_paper;"))
         context={'papers':papers}
         
+        papers_approved=dictfetchall(connections['scholars_db'].cursor().execute("select * from paper;"))
+        context={'papers':papers,'approved':papers_approved}
         return render(request,'admin_panel/paper.html',context=context)
     else:
             return render(request,'admin_panel/admin_login.html')
+
+
+def delete(request,id):
+    connections['scholars_db'].cursor().execute("delete from authorof where paper_id='"+ str(id) +"' ;")
+    connections['scholars_db'].cursor().execute("delete from reference where paper_id='"+ str(id) +"' ;")
+    
+    connections['scholars_db'].cursor().execute("delete from reference where ref_paper_id='"+ str(id) +"' ;")
+    
+    connections['scholars_db'].cursor().execute("delete from URL where id='"+ str(id) +"' ;")
+    connections['scholars_db'].cursor().execute("delete from paper where id='"+ str(id) +"' ;")
+    
+    connections['scholars_db'].cursor().execute("commit;")
+    
+    papers=dictfetchall(connections['scholars_db'].cursor().execute("select * from non_verified_paper;"))
+    context={'papers':papers}
+    
+    papers_approved=dictfetchall(connections['scholars_db'].cursor().execute("select * from paper;"))
+    context={'papers':papers,'approved':papers_approved}
+    return render(request,'admin_panel/paper.html',context=context)
+
 
 def approve(request,id):
     
@@ -69,6 +93,8 @@ def approve(request,id):
     papers=dictfetchall(connections['scholars_db'].cursor().execute("select * from non_verified_paper;"))
 
     
+    papers_approved=dictfetchall(connections['scholars_db'].cursor().execute("select * from paper;"))
+    context={'papers':papers,'approved':papers_approved}
     context={'papers':papers}
     return render(request,'admin_panel/paper.html',context=context)
 
@@ -78,6 +104,9 @@ def reject(request,id):
     connections['scholars_db'].cursor().execute("delete from non_verified_reference where paper_id='"+ str(id) +"' ;")
     connections['scholars_db'].cursor().execute("delete from non_verified_paper where id='"+ str(id) +"' ;")
     papers=dictfetchall(connections['scholars_db'].cursor().execute("select * from non_verified_paper;"))
+    
+    papers_approved=dictfetchall(connections['scholars_db'].cursor().execute("select * from paper;"))
+    context={'papers':papers,'approved':papers_approved}
     context={'papers':papers}
     return render(request,'admin_panel/paper.html',context=context)
 

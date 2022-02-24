@@ -8,6 +8,8 @@ urlpatterns=[
     path('admin_panel/paper',views.paper,name='admin_paper'),
     path('admin_panel/approve/<int:id>',views.approve,name='approve'),
     path('admin_panel/reject/<int:id>',views.reject,name='reject'),
+    
+    path('admin_panel/remove/<int:id>',views.delete,name='delete'),
 
     path('admin_panel/universisty',views.university,name='admin_university'),
     path('admin_panel/universisty/add_university',views.university_new,name='add_university'),
