@@ -1,4 +1,4 @@
-"# Connect_Scholars" 
+
 ![logo2](https://user-images.githubusercontent.com/44304799/155750677-6ce49ef9-fe15-4abd-84be-b6376ed84ce1.jpg)
 
 This project is developed by Md Toki Tahmid and Nafis Karim as the term project of Level 2 - Term 2 of BUET CSE. 
