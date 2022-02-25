@@ -3,23 +3,21 @@
 
 This project is developed by Md Toki Tahmid and Nafis Karim as the term project of Level 2 - Term 2 of BUET CSE. 
 
-![BookKeep](https://github.com/arifinnasif/BookKeep/blob/main/static/logo.png?raw=true)
-
 
 # BookKeep
 
-An **Online Book Store** inspired by [Rokomari](https://www.rokomari.com/book), with some extra features!
+An **Journal Management Toll** inspired by [Google Scholars](https://scholars.google.com).
 
-Made for Level-2 Term-2 Database Sessional Project created by [Md. Asif Haider (1805112)](https://github.com/asifhaider) and [Md Sultanul Arifin (1805097)](https://github.com/arifinnasif)
 
-Under the kind supervision of [Rayhan Rashed](https://github.com/rayhanrashed), Lecturer, CSE, BUET
+This project is developed by Md Toki Tahmid and Nafis Karim as the term project of Level 2 - Term 2 of BUET CSE.
+
+Under the kind supervision of [Tahmid Hasan](https://tahmid04.github.io/), Lecturer, CSE, BUET
 
 
 
 ### Tools used
 
 ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -27,26 +25,11 @@ Under the kind supervision of [Rayhan Rashed](https://github.com/rayhanrashed), 
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white)
 
 
-[![HitCount](http://hits.dwyl.com/arifinnasif/BookKeep.svg)](http://hits.dwyl.com/arifinnasif/BookKeep)
-
-### Directory descriptions
-* **BookKeep :** base project directory
-* **admin :** admin panel app directory. contains admin access over all other features and users
-* **catalog :** the home app directory. responsible for showing all the books short intro as card layout. can be used as search result also
-* **book_details :** the details information about each book, its author, publisher and many other attributes. also contains rating, review features
-* **user_profile :** client side app directory. contains user account info, cart, wishlist, orders and borrows info
-* **doc :** contains basic project info, like, project proposal, ERD etc
-* **login :** this app handles user login and session managements
-* **sql :** contains sql commands required every now and then. also contains the database structure and data dumps.
-* **templates :** used for containing `html` template files
-* **custome_utils :** intended to be a package that contain the elements needed in the entire django project irrespective of apps
 
 ### Things to do after cloning the repo -
-1. Setup python virtual environment
+1. Install django to your system
 2. Install dependencies
 	```
 	python -m pip3 install -r requirements.txt
