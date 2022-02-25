@@ -4,7 +4,7 @@
 This project is developed by Md Toki Tahmid and Nafis Karim as the term project of Level 2 - Term 2 of BUET CSE. 
 
 
-# BookKeep
+# Connect Scholars
 
 An **Journal Management Toll** inspired by [Google Scholars](https://scholars.google.com).
 
@@ -28,30 +28,27 @@ Under the kind supervision of [Tahmid Hasan](https://tahmid04.github.io/), Lectu
 
 
 
-### Things to do after cloning the repo -
+### Things to do to run the project -
 1. Install django to your system
 2. Install dependencies
 	```
 	python -m pip3 install -r requirements.txt
 	```
-3. Run
-    ```
-    python manage.py collectstatic
-    ```
-4. If oracle is not locally installed. Download oracle instant client and run
+
+3. If oracle is not locally installed. Download oracle instant client and run
 	```
 	export LD_LIBRARY_PATH=/path/to/instantclient_directory/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 	```
-5. For migration to commence
+
+4. Create a new oracle user into your system named 'c##connect_scholars' with password: connect_scholars 
 	```
-	python manage.py migrate
+	create user c##connect_scholars identified by connect_scholars
+	grant dba to c##connect_scholars
 	```
-5. Set up the database using files in `sql`
-6. Start the server with
+6. Download the sql.sql script and run it into a terminal of the created user. It will create all the tables, procedures and triggers
+7. Download the whole zip file from the github repo and load it to any compiler, for example: VScode.
+8. Navigate to the project directory and run:
 	```
 	python manage.py runserver
+	
 	```
-7. The `BookKeep` app will now be avaiable on `127.0.0.1:8000`
-
-
-Made with <span style="color: #e25555;">&#9829;</span> by the **BookKeep Team**
